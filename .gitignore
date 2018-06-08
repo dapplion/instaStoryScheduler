@@ -4,5 +4,5 @@ build/motests/
 .credentials
 credentials.envs
 cookies/
-build/photosPosted/*
-build/photosToPost/*
+build/photos/posted/*
+build/photos/toPost/*
