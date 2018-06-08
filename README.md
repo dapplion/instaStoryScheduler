@@ -36,7 +36,7 @@ You have to create a directory in your server at ```/usr/src/photos/toPost``` an
 
 #### 5. Run the service
 ``` 
-docker-compose build && docker-compose up
+docker-compose build && docker-compose up -d
 ```
 
 ## Credit
