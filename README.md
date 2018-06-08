@@ -25,7 +25,12 @@ POSTNOW=true
 - The email account will be used to send notifications to the emailto in case of success posting a picture or in case of error
 - The POSTNOW flag triggers a post right away when launching the program
 
-#### 4. Run the service
+#### 4. Provide pictures
+This app will feed from pictures at ```/usr/src/photos/toPost``` and after posting, it will move them to ```/usr/src/photos/posted``` 
+
+You have to create a directory in your server at ```/usr/src/photos/toPost``` and fill it with png / jpeg / jpg pictures. If the app runs out of pictures it will crash and report so to the email provided.
+
+#### 5. Run the service
 ``` 
 docker-compose build && docker-compose up
 ```
