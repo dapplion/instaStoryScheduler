@@ -14,6 +14,10 @@ sh installDocker.sh
 
 #### 3. Create a .envs file with this variables
 ```
+nano credentials.envs
+```
+
+```
 USER=<instagram-username>
 PASS=<instagram-password>
 POST_INTERVAL_MIN=60
