@@ -14,6 +14,10 @@ sh installDocker.sh
 
 #### 3. Create a .envs file with this variables
 ```
+nano credentials.envs
+```
+
+```
 USER=<instagram-username>
 PASS=<instagram-password>
 POST_INTERVAL_MIN=60
@@ -32,7 +36,7 @@ You have to create a directory in your server at ```/usr/src/photos/toPost``` an
 
 #### 5. Run the service
 ``` 
-docker-compose build && docker-compose up
+docker-compose build && docker-compose up -d
 ```
 
 ## Credit
