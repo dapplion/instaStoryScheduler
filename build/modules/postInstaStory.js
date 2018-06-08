@@ -1,6 +1,6 @@
 var Client = require('./instagramPrivateAPI').V1;
 // var Client = require('./instagram-private-api-master').V1;
-// var emailAPI = require('./email')
+var emailAPI = require('./email')
 
 module.exports = function (user, pass, photoPath) {
 	console.log('Posting photo: '+photoPath+'\nuser: '+user+', pass: '+pass)
@@ -24,10 +24,10 @@ function uploadStory(session, photoPath) {
   stories.postPhoto(photoPath, ' ').then((media) => {
     // do something with media
     console.log('Successfully posted Story at timestamp: '+media.taken_at);
-		// emailAPI.send(
-		// 	'Posted Story',
-		// 	'Successfully posted Story at timestamp: '+media.taken_at
-		// )
+		emailAPI.send(
+			'Posted Story',
+			'Successfully posted Story at timestamp: '+media.taken_at
+		)
   });
 
 }

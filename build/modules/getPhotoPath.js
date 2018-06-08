@@ -4,8 +4,9 @@ var average = require('image-average-color');
 var rgbHex = require('rgb-hex');
 var del = require('delete')
 // USER PARAMS
-const sourceFolder = 'photosToPost'+'/'
-const afterPostFolder = 'photosPosted'+'/'
+const sourceFolder = 'photos/toPost'+'/'
+const afterPostFolder = 'photos/posted'+'/'
+if (!fs.existsSync(afterPostFolder)) fs.mkdirSync(afterPostFolder)
 // end USER PARAMS
 const testFolder = './'+sourceFolder
 

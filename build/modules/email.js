@@ -1,19 +1,18 @@
 var nodemailer = require('nodemailer');
 
 
-
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: emailSource,
-    pass: emailSourcePass
+    user: process.env.EMAILUSER,
+    pass: process.env.EMAILPASS
   }
 });
 
 exports.send = function(subject, text) {
   var mailOptions = {
-    from: emailSource,
-    to: emailTo,
+    from: '"Insta-story poster 👻" <insta-story-poster-dapplion@dapplion.io>', // sender address
+    to: process.env.EMAILTO,
     subject: subject,
     text: text
   };

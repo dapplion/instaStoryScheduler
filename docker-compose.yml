@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+    insta-poster:
+        build: ./build
+        image: insta-poster-image
+        container_name: instaPoster
+        restart: always
+        env_file:
+          - credentials.envs
+        volumes:
+          - /usr/src/photos/:/usr/src/app/photos/

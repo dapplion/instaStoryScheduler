@@ -3,44 +3,36 @@ var fs = require('fs')
 var schedule = require('node-schedule')
 var postInstaStory = require('./modules/postInstaStory')
 var getPhotoPath = require('./modules/getPhotoPath')
+var email = require('./modules/email')
 
-const SCHEDULE = true
 const CREDENTIALS_PATH = './.credentials'
-const POST_INTERVAL = 5 // in minutes
+const POST_INTERVAL_MIN = process.env.POST_INTERVAL_MIN
+const USER = process.env.USER
+const PASS = process.env.PASS
 
-if (fs.existsSync(CREDENTIALS_PATH)) {
-  const credentialsData = fs.readFileSync(CREDENTIALS_PATH)
-  const credentials = JSON.parse(credentialsData)
-  init(credentials)
-} else {
+if (!USER) throw Error('Undefined process env: USER')
+if (!PASS) throw Error('Undefined process env: PASS')
+if (!POST_INTERVAL_MIN) throw Error('Undefined process env: POST_INTERVAL_MIN')
+if (parseFloat(POST_INTERVAL_MIN) < 0.5) throw Error('Posting interval is too short, leave at least 0.5 min between posts. POST_INTERVAL_MIN: '+POST_INTERVAL_MIN)
+if (!process.env.EMAILUSER) throw Error('Undefined process env: EMAILUSER')
+if (!process.env.EMAILPASS) throw Error('Undefined process env: EMAILPASS')
+if (!process.env.EMAILTO) throw Error('No receiver specified')
 
-  prompt.get(['username', 'password'], function(err, res) {
-    const credentials = {
-      username: res.username,
-      password: res.password
-    }
-    fs.writeFileSync(CREDENTIALS_PATH, JSON.stringify(credentials))
-    init(credentials)
-  })
+
+const credentials = {
+  username: USER,
+  password: PASS
 }
 
-
-
-function init(credentials) {
-
-  // When the rules below are met, the job will execute
-  // Format of the schdule job -> ('minute hour day month week_day')
-
-  if (SCHEDULE) {
-    setInterval(function(){
-      launchPost(credentials)
-    }, POST_INTERVAL * 60*1000);
-
-  } else {
-    // For testing purposes, post right away
-    launchPost(credentials)
-  }
+if (process.env.POSTNOW) {
+  launchPost(credentials)
 }
+
+console.log('STARTING POSTING INTERVAL with: '+parseFloat(POST_INTERVAL_MIN) * 60*1000+' ms')
+setInterval(function(){
+  launchPost(credentials)
+}, parseFloat(POST_INTERVAL_MIN) * 60*1000);
+
 
 
 
@@ -58,6 +50,7 @@ function launchPost(credentials) {
     postInstaStory(user, pass, photoPath)
   })
   .catch((error) => {
+    email.send('ERROR', JSON.stringify(error))
     console.log(error)
   });
 }
