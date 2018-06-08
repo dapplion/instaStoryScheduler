@@ -19,7 +19,8 @@ if (!process.env.EMAILPASS) throw Error('Undefined process env: EMAILPASS')
 if (!process.env.EMAILTO) throw Error('No receiver specified')
 
 // Initialize cookies folder
-fs.mkdirSync('./modules/cookies')
+const COOKIES_DIR = './modules/cookies'
+if(!fs.existsSync(COOKIES_DIR)) fs.mkdirSync(COOKIES_DIR)
 
 
 const credentials = {
